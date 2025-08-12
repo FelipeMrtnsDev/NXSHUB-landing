@@ -1,35 +1,36 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { motion, useInView, Variants } from "framer-motion"
 
 export default function AboutSection() {
-  // Cria uma referência para a seção principal.
-  // Isso nos permite observar quando ela entra na tela.
   const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, amount: 0.2 })
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isHovering, setIsHovering] = useState(false)
 
-  // O hook useInView retorna `true` quando o elemento referenciado (ref) está visível.
-  // `once: true` garante que a animação aconteça apenas uma vez.
-  // `amount: 0.5` significa que a animação começa quando 50% da seção estiver visível.
-  const isInView = useInView(ref, { once: true, amount: 0.5 })
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    setMousePosition({ x, y })
+  }
 
-  // Define as variantes da animação para o divisor, com o tipo explícito 'Variants'.
   const dividerVariants: Variants = {
-    // Estado inicial: a linha está "escondida" com escala vertical 0.
     hidden: { scaleY: 0 },
-    // Estado final: a linha cresce até sua altura total (escala 1).
     visible: {
       scaleY: 1,
-      transition: {
-        duration: 1.2, // Duração da animação em segundos.
-        ease: "easeInOut", // Efeito de aceleração e desaceleração suave.
-      },
+      transition: { duration: 1.2, ease: "easeInOut" },
     },
   }
 
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  }
+
   return (
-    // A referência é anexada aqui para que possamos observar a seção inteira.
     <section ref={ref} className="relative z-10 py-24 px-6 max-w-6xl mx-auto">
       {/* Cabeçalho da Seção */}
       <div className="flex justify-between items-center mb-8 px-2">
@@ -47,8 +48,26 @@ export default function AboutSection() {
         </Button>
       </div>
 
-      {/* Card Principal */}
-      <div className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-2xl p-8 md:p-12 md:py-28 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] mb-8">
+      {/* Card Principal Animado com Efeito Spotlight */}
+      <motion.div
+        variants={cardVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+        className="relative bg-black/20 backdrop-blur-lg border border-white/10 rounded-2xl p-8 md:p-12 md:py-28 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] mb-8 overflow-hidden"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        {/* Elemento do Spotlight */}
+        <div
+          className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+          style={{
+            opacity: isHovering ? 1 : 0,
+            background: `radial-gradient(400px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.018), transparent 80%)`,
+          }}
+        />
+
         <div className="grid md:grid-cols-[1fr_auto_2fr] gap-8 md:gap-12 items-center">
           {/* Coluna da Esquerda: Palavras-chave */}
           <div>
@@ -84,10 +103,16 @@ export default function AboutSection() {
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Card Secundário */}
-      <div className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)]">
+      {/* Card Secundário Animado */}
+      <motion.div
+        variants={cardVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+        className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)]"
+      >
         <div className="flex items-center gap-6">
           <div className="w-12 h-12 bg-blue-800 rounded-full flex-shrink-0" />
           <p className="text-gray-300 leading-relaxed">
@@ -95,7 +120,7 @@ export default function AboutSection() {
             industry.
           </p>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
