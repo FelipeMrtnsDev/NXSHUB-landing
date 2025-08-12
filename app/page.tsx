@@ -9,10 +9,7 @@ import Footer from "@/components/Footer"
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Background completamente preto */}
-      <div className="fixed inset-0 bg-black pointer-events-none"></div>
-
+    <>
       <Header />
       <HeroSection />
       <AboutSection />
@@ -21,6 +18,6 @@ export default function LandingPage() {
       <TestimonialsSection />
       <ContactSection />
       <Footer />
-    </div>
+    </>
   )
 }
