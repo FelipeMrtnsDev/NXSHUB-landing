@@ -1,15 +1,18 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useRef, useState } from "react"
+import { useRef, useState } from "react" // MODIFICAÇÃO: Importado o useState
 import { motion, useInView, Variants } from "framer-motion"
 
 export default function AboutSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
+  
+  // MODIFICAÇÃO: Estados para o efeito de luz do mouse
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
+  // MODIFICAÇÃO: Função para capturar a posição do mouse
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
     const x = e.clientX - rect.left
@@ -17,23 +20,43 @@ export default function AboutSection() {
     setMousePosition({ x, y })
   }
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  }
+  
   const dividerVariants: Variants = {
     hidden: { scaleY: 0 },
     visible: {
       scaleY: 1,
-      transition: { duration: 1.2, ease: "easeInOut" },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
     },
   }
 
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  }
-
   return (
-    <section id="sobre" ref={ref} className="relative z-10 py-24 px-6 max-w-6xl mx-auto">
-      {/* Cabeçalho da Seção */}
-      <div className="flex justify-between items-center mb-8 px-2">
+    <motion.section 
+      id="sobre" 
+      ref={ref} 
+      className="relative z-10 py-24 px-6 max-w-6xl mx-auto"
+      variants={containerVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+    >
+      <motion.div variants={itemVariants} className="flex justify-between items-center mb-8 px-2">
         <div className="flex items-center">
           <div className="w-1 h-14 bg-gradient-to-r from-blue-800/80 to-blue-700/80 rounded-full" />
             <div className="space-y-1 ml-4">
@@ -51,20 +74,17 @@ export default function AboutSection() {
         >
           Nxs hub
         </Button>
-      </div>
+      </motion.div>
 
-      {/* Card Principal Animado com Efeito Spotlight */}
       <motion.div
-        variants={cardVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+        variants={itemVariants}
         className="relative bg-white/1 backdrop-blur-lg border border-white/10 rounded-2xl p-8 md:p-12 md:py-28 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] mb-8 overflow-hidden"
+        // MODIFICAÇÃO: Eventos do mouse re-adicionados
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
-        {/* Elemento do Spotlight */}
+        {/* MODIFICAÇÃO: Elemento do Spotlight re-adicionado */}
         <div
           className="pointer-events-none absolute -inset-px transition-opacity duration-300"
           style={{
@@ -74,8 +94,7 @@ export default function AboutSection() {
         />
 
         <div className="grid md:grid-cols-[1fr_auto_2fr] gap-8 md:gap-12 items-center">
-          {/* Coluna da Esquerda: Palavras-chave */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h3 className="text-5xl font-bold space-y-4">
               <span className="block bg-gradient-to-r from-blue-800 via-blue-700 to-blue-400 bg-clip-text text-transparent">
                 Progresso
@@ -87,18 +106,14 @@ export default function AboutSection() {
                 Inovação
               </span>
             </h3>
-          </div>
+          </motion.div>
 
-          {/* Divisor Vertical Animado */}
           <motion.div
             className="w-1 rounded-full h-full bg-white/20 hidden md:block origin-center"
             variants={dividerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
           />
 
-          {/* Coluna da Direita: Texto */}
-          <div>
+          <motion.div variants={itemVariants}>
             <p className="text-gray-300 leading-relaxed">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy
@@ -106,16 +121,12 @@ export default function AboutSection() {
               of type and scrambled it to make a type specimen book. It has
               survived not only five centuries.
             </p>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
 
-      {/* Card Secundário Animado */}
       <motion.div
-        variants={cardVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+        variants={itemVariants}
         className="bg-white/1 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)]"
       >
         <div className="flex items-center gap-6">
@@ -126,6 +137,6 @@ export default function AboutSection() {
           </p>
         </div>
       </motion.div>
-    </section>
+    </motion.section>
   )
 }

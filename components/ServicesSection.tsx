@@ -82,12 +82,6 @@ export default function ServicesSection() {
               </p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            className="border-white/20 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] text-white/80 hover:bg-slate-950/10 hover:text-blue-700/70 bg-black/30 rounded-xl text-lg px-8 py-[6px] h-auto cursor-pointer flex-shrink-0"
-          >
-            VER MAIS
-          </Button>
         </motion.div>
       </div>
       <motion.div
@@ -110,7 +104,7 @@ export default function ServicesSection() {
           {services.map((service, index) => (
             <motion.div key={index} variants={itemVariants}>
               <Card
-                className="bg-white/1 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 hover:border-white/20 hover:scale-[1.02] shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] p-16 h-full"
+                className="bg-white/1 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 hover:border-white/20 hover:scale-[1.02] shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] lg:p-16 md:p-12 p-8 h-full"
               >
                 <CardContent className="p-0">
                   <div className="flex items-center gap-4 mb-4">

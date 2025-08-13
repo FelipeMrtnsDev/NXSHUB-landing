@@ -94,12 +94,6 @@ export default function ProjectsSection() {
             </p>
           </div>
         </div>
-        <Button
-          variant="outline"
-          className="border-blue-400/50 text-blue-400 hover:bg-blue-400/20 glass-card bg-transparent"
-        >
-          VER MAIS
-        </Button>
       </div>
 
       <motion.div
