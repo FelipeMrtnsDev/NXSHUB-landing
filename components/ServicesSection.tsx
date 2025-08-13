@@ -1,8 +1,13 @@
+"use client"
+
+import { motion, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Globe, Bot, Smartphone, FileText } from "lucide-react"
-// Corrigido o nome do componente para corresponder ao artefato
+import React from "react"
 import { InfiniteMovingCarousel } from "./InfiniteMovingCarousel"
+
+
 
 export default function ServicesSection() {
   const services = [
@@ -32,10 +37,40 @@ export default function ServicesSection() {
     },
   ]
 
+  // Variantes de animação para o container dos cards
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2, // Atraso entre a animação de cada card
+      },
+    },
+  }
+
+  // Variantes de animação para cada card individual
+  const itemVariants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  }
+
   return (
-    <section className="relative z-10 py-16">
+    <section id="servicos" className="relative z-10 py-16 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="flex justify-between items-center mb-2">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={itemVariants}
+          className="flex justify-between items-center mb-2"
+        >
           <div className="flex items-center">
             <div className="w-1 h-14 bg-gradient-to-r from-blue-800/80 to-blue-700/80 rounded-full" />
             <div className="space-y-1 ml-4">
@@ -53,34 +88,47 @@ export default function ServicesSection() {
           >
             VER MAIS
           </Button>
-        </div>
+        </motion.div>
       </div>
-      <div className="mb-2">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5 }}
+        className="mb-2"
+      >
         <InfiniteMovingCarousel />
-      </div>
+      </motion.div>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-8">
+        <motion.div
+          className="grid md:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {services.map((service, index) => (
-            <Card
-              key={index}
-              className="bg-white/1 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 hover:border-white/20 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] p-8"
-            >
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center flex-shrink-0 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)]">
-                    {service.icon}
+            <motion.div key={index} variants={itemVariants}>
+              <Card
+                className="bg-white/1 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 hover:border-white/20 hover:scale-[1.02] shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] p-16 h-full"
+              >
+                <CardContent className="p-0">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center flex-shrink-0 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] hover:scale-110 transition-all duration-300">
+                      {service.icon}
+                    </div>
+                    <h3 className="text-3xl font-semibold text-white">
+                      {service.title}
+                    </h3>
                   </div>
-                  <h3 className="text-3xl font-semibold text-white">
-                    {service.title}
-                  </h3>
-                </div>
-                <p className="text-gray-400 text-md leading-relaxed">
-                  {service.description}
-                </p>
-              </CardContent>
-            </Card>
+                  <p className="text-gray-400 text-md leading-relaxed">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

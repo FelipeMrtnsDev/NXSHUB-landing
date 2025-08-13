@@ -31,7 +31,7 @@ export default function AboutSection() {
   }
 
   return (
-    <section ref={ref} className="relative z-10 py-24 px-6 max-w-6xl mx-auto">
+    <section id="sobre" ref={ref} className="relative z-10 py-24 px-6 max-w-6xl mx-auto">
       {/* Cabeçalho da Seção */}
       <div className="flex justify-between items-center mb-8 px-2">
         <div className="flex items-center">
@@ -69,7 +69,7 @@ export default function AboutSection() {
           className="pointer-events-none absolute -inset-px transition-opacity duration-300"
           style={{
             opacity: isHovering ? 1 : 0,
-            background: `radial-gradient(400px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.018), transparent 80%)`,
+            background: `radial-gradient(400px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.089), transparent 80%)`,
           }}
         />
 

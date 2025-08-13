@@ -21,8 +21,9 @@ const Header = () => {
   const mobileItemsRef = useRef<(HTMLLIElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // Controla a renderização do conteúdo do menu para permitir a animação de saída.
   const [isRendering, setIsRendering] = useState(false);
+  // NOVO: Estado para controlar se uma rolagem manual está em andamento
+  const [isScrolling, setIsScrolling] = useState(false);
 
 
   // --- Efeitos ---
@@ -85,7 +86,6 @@ const Header = () => {
     if (isMenuOpen) {
       setIsRendering(true);
     } else {
-      // AJUSTE: Espera a nova duração da animação (500ms) terminar.
       timer = setTimeout(() => {
         setIsRendering(false);
       }, 500);
@@ -93,11 +93,87 @@ const Header = () => {
     return () => clearTimeout(timer);
   }, [isMenuOpen]);
 
+  // Efeito para observar as seções e atualizar o link ativo
+  useEffect(() => {
+    const options = {
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      // MODIFICAÇÃO: Ignora o observador se a rolagem manual estiver ativa
+      if (isScrolling) return;
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = navItems.findIndex(item => `#${entry.target.id}` === item.href);
+          if (index !== -1) {
+            setActiveIndex(index);
+          }
+        }
+      });
+    }, options);
+
+    const sections = navItems.map(item => document.querySelector(item.href));
+    sections.forEach(section => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach(section => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, [isScrolling]); // Adicionado isScrolling como dependência
+
 
   // --- Funções ---
-  const handleLinkClick = (index: number) => {
+  
+  // Função de rolagem suave customizada com callback de conclusão
+  const smoothScrollTo = (targetId: string, duration: number = 800, onComplete?: () => void) => {
+    const targetElement = document.querySelector(targetId);
+    if (!targetElement) return;
+
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      } else {
+        onComplete?.(); // MODIFICAÇÃO: Chama o callback ao final da animação
+      }
+    };
+
+    const ease = (t: number, b: number, c: number, d: number) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    };
+
+    requestAnimationFrame(animation);
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, index: number, href: string) => {
+    e.preventDefault();
+    setIsScrolling(true); // MODIFICAÇÃO: Ativa o bloqueio do observador
     setActiveIndex(index);
-    setTimeout(() => setIsMenuOpen(false), 200);
+    
+    // MODIFICAÇÃO: Passa um callback para reativar o observador ao final
+    smoothScrollTo(href, 800, () => {
+      setIsScrolling(false);
+    });
+
+    if (isMenuOpen) {
+        setTimeout(() => setIsMenuOpen(false), 300);
+    }
   };
 
   return (
@@ -115,7 +191,7 @@ const Header = () => {
           <ul className="relative flex items-center">
             {navItems.map((item, index) => (
               <li key={item.name} ref={(el: any) => (itemsRef.current[index] = el)} className="z-10">
-                <a href={item.href} onClick={() => setActiveIndex(index)} className={`block whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium outline-none transition-colors duration-300 ${activeIndex === index ? "text-white" : "text-gray-400 hover:text-white"}`}>
+                <a href={item.href} onClick={(e) => handleLinkClick(e, index, item.href)} className={`block whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium outline-none transition-colors duration-300 ${activeIndex === index ? "text-white" : "text-gray-400 hover:text-white"}`}>
                   {item.name}
                 </a>
               </li>
@@ -135,12 +211,10 @@ const Header = () => {
         
         {/* Dropdown do Menu Mobile com Animação */}
         <div 
-          // AJUSTE: Animação simplificada para um 'ease-in-out' suave com duração de 500ms.
           className={`md:hidden mt-2 origin-top transition-transform duration-500 ease-in-out ${isMenuOpen ? 'scale-y-100' : 'scale-y-0'}`}
         >
           {isRendering && (
             <ul className="relative flex flex-col items-center gap-y-2">
-              {/* Bolha do Menu Mobile */}
               <div
                 className="absolute left-2 right-2 rounded-lg bg-white/10 ring-1 ring-inset ring-white/10 z-0"
                 style={{
@@ -150,7 +224,7 @@ const Header = () => {
               />
               {navItems.map((item, index) => (
                 <li key={item.name} ref={(el: any) => (mobileItemsRef.current[index] = el)} className="w-full z-10">
-                  <a href={item.href} onClick={() => handleLinkClick(index)} className={`block text-center w-full rounded-lg py-3 text-base font-medium transition-colors duration-200 ${activeIndex === index ? "text-white" : "text-gray-300"}`}>
+                  <a href={item.href} onClick={(e) => handleLinkClick(e, index, item.href)} className={`block text-center w-full rounded-lg py-3 text-base font-medium transition-colors duration-200 ${activeIndex === index ? "text-white" : "text-gray-300"}`}>
                     {item.name}
                   </a>
                 </li>
