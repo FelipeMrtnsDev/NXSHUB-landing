@@ -36,9 +36,14 @@ export default function AboutSection() {
       <div className="flex justify-between items-center mb-8 px-2">
         <div className="flex items-center">
           <div className="w-1 h-14 bg-gradient-to-r from-blue-800/80 to-blue-700/80 rounded-full" />
-          <h2 className="bg-gradient-to-r text-4xl from-blue-700/60 via-blue-800/30 to-transparent pl-2 py-2 ml-0 rounded-md">
-            O que é o NXS HUB
-          </h2>
+            <div className="space-y-1 ml-4">
+              <h2 className="text-4xl font-bold text-white">
+                O que é o NXS HUB
+              </h2>
+              <p className="text-gray-400">
+                Conectando pessoas, projetos e oportunidades.
+              </p>
+            </div>
         </div>
         <Button
           variant="outline"
@@ -54,7 +59,7 @@ export default function AboutSection() {
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-        className="relative bg-black/20 backdrop-blur-lg border border-white/10 rounded-2xl p-8 md:p-12 md:py-28 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] mb-8 overflow-hidden"
+        className="relative bg-white/1 backdrop-blur-lg border border-white/10 rounded-2xl p-8 md:p-12 md:py-28 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] mb-8 overflow-hidden"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -111,7 +116,7 @@ export default function AboutSection() {
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-        className="bg-black/20 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)]"
+        className="bg-white/1 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)]"
       >
         <div className="flex items-center gap-6">
           <div className="w-12 h-12 bg-blue-800 rounded-full flex-shrink-0" />

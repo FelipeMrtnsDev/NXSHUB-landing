@@ -6,7 +6,17 @@ export default function ProjectsSection() {
   return (
     <section className="relative z-10 py-16 px-6 max-w-6xl mx-auto">
       <div className="flex justify-between items-center mb-12">
-        <h2 className="text-3xl font-bold">Projetos destacados</h2>
+        <div className="flex items-center">
+          <div className="w-1 h-14 bg-gradient-to-r from-blue-800/80 to-blue-700/80 rounded-full" />
+          <div className="space-y-1 ml-4">
+            <h2 className="text-4xl font-bold text-white">
+              Projetos destacados
+            </h2>
+            <p className="text-gray-400">
+              O que estamos criando
+            </p>
+          </div>
+        </div>
         <Button
           variant="outline"
           className="border-blue-400/50 text-blue-400 hover:bg-blue-400/20 glass-card bg-transparent"
