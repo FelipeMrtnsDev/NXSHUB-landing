@@ -29,30 +29,30 @@ const projectsMockup = [
     imageUrl: "/the-drinker.png",
     link: "https://the-drinker.vercel.app"
   },
-  // {
-  //   id: 4,
-  //   name: "Rede Social para Músicos",
-  //   description: "Um espaço para artistas compartilharem suas criações, colaborarem e encontrarem oportunidades.",
-  //   technologies: ["Next.js", "TypeScript", "Supabase"],
-  //   imageUrl: "/the-drinker.png",
-  //   link: "https://the-drinker.vercel.app"
-  // },
-  // {
-  //   id: 5,
-  //   name: "Ferramenta de IA",
-  //   description: "Uma aplicação que utiliza inteligência artificial para otimizar processos de negócios.",
-  //   technologies: ["Python", "Flask", "Scikit-learn"],
-  //   imageUrl: "/the-drinker.png",
-  //   link: "https://the-drinker.vercel.app"
-  // },
-  // {
-  //   id: 6,
-  //   name: "Blog Pessoal Moderno",
-  //   description: "Um blog com design minimalista, focado na experiência de leitura e performance.",
-  //   technologies: ["Astro", "Tailwind CSS", "Markdown"],
-  //   imageUrl: "/the-drinker.png",
-  //   link: "https://the-drinker.vercel.app"
-  // },
+  {
+    id: 4,
+    name: "Rede Social para Músicos",
+    description: "Um espaço para artistas compartilharem suas criações, colaborarem e encontrarem oportunidades.",
+    technologies: ["Next.js", "TypeScript", "Supabase"],
+    imageUrl: "/the-drinker.png",
+    link: "https://the-drinker.vercel.app"
+  },
+  {
+    id: 5,
+    name: "Ferramenta de IA",
+    description: "Uma aplicação que utiliza inteligência artificial para otimizar processos de negócios.",
+    technologies: ["Python", "Flask", "Scikit-learn"],
+    imageUrl: "/the-drinker.png",
+    link: "https://the-drinker.vercel.app"
+  },
+  {
+    id: 6,
+    name: "Blog Pessoal Moderno",
+    description: "Um blog com design minimalista, focado na experiência de leitura e performance.",
+    technologies: ["Astro", "Tailwind CSS", "Markdown"],
+    imageUrl: "/the-drinker.png",
+    link: "https://the-drinker.vercel.app"
+  },
 ];
 
 
