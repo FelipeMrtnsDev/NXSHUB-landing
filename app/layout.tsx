@@ -7,8 +7,8 @@ import './globals.css'
 import NeonBackground from '../components/NeonBackground'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'NXS HUB',
+  description: 'NXS HUB',
   generator: 'v0.dev',
 }
 
