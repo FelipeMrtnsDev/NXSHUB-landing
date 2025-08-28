@@ -115,26 +115,10 @@ export default function AboutSection() {
 
           <motion.div variants={itemVariants}>
             <p className="text-gray-300 leading-relaxed">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy
-              text ever since the 1500s, when an unknown printer took a galley
-              of type and scrambled it to make a type specimen book. It has
-              survived not only five centuries.
+              Somos uma software house apaixonada por inovação. Nossa missão é simples: alavancar o crescimento do seu negócio por meio de tecnologia estratégica e soluções digitais sob medida.
+              Combinamos design moderno, inteligência artificial e desenvolvimento ágil para criar ferramentas que não apenas funcionam, mas geram resultados reais.
             </p>
           </motion.div>
-        </div>
-      </motion.div>
-
-      <motion.div
-        variants={itemVariants}
-        className="bg-white/1 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)]"
-      >
-        <div className="flex items-center gap-6">
-          <div className="w-12 h-12 bg-blue-800 rounded-full flex-shrink-0" />
-          <p className="text-gray-300 leading-relaxed">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </p>
         </div>
       </motion.div>
     </motion.section>

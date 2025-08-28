@@ -6,6 +6,7 @@ import ProjectsSection from "@/components/ProjectsSection"
 import TestimonialsSection from "@/components/TestimonialsSection"
 import ContactSection from "@/components/ContactSection"
 import Footer from "@/components/Footer"
+import BenefitsSection from "@/components/BenefitsSection"
 
 export default function LandingPage() {
   return (
@@ -14,6 +15,7 @@ export default function LandingPage() {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
+      <BenefitsSection />
       <ProjectsSection />
       <TestimonialsSection />
       <ContactSection />

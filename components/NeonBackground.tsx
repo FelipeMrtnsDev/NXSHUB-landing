@@ -52,10 +52,10 @@ const NeonBackground = () => {
     const init = () => {
       particles = [];
       const numberOfParticles = 70; // Reduzido para melhor performance
-      const color = '#00158b';
+      const color = '#1738f0';
 
       for (let i = 0; i < numberOfParticles; i++) {
-        const size = Math.random() * 1.5 + 1;
+        const size = Math.random() * 3 + 1;
         const x = Math.random() * (canvas.width - size * 2) + size;
         const y = Math.random() * (canvas.height - size * 2) + size;
         const speedX = (Math.random() - 0.5) * 0.4;

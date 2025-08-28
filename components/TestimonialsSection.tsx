@@ -7,10 +7,10 @@ import { useEffect, useState } from "react"
 
 const testimonials = [
   {
-    name: "Gabriel Figueredo",
-    comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    date: "12 abril, 2024",
-    rating: 5,
+    "name": "Gabriel Figueredo",
+    "comment": "A NXS Hub transformou nossa presença digital. O site que eles desenvolveram não só é visualmente incrível, mas também otimizou nossas conversões em mais de 50%. A equipe é profissional, atenta aos detalhes e superou todas as nossas expectativas. Foi o melhor investimento que fizemos!",
+    "date": "12 de abril, 2024",
+    "rating": 5
   },
   {
     name: "Ana Silva",

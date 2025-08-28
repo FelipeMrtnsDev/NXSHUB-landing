@@ -3,7 +3,8 @@
 import { motion, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Globe, Bot, Smartphone, FileText } from "lucide-react"
+// Adicionado 'Users' para o novo ícone
+import { Globe, Bot, Smartphone, FileText, Users } from "lucide-react"
 import React from "react"
 import { InfiniteMovingCarousel } from "./InfiniteMovingCarousel"
 
@@ -15,25 +16,32 @@ export default function ServicesSection() {
       icon: <Globe className="w-6 h-6 text-white/90" />,
       title: "Sites",
       description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "Construímos websites profissionais, rápidos e otimizados para a sua ideia ou para conversão, prontos para gerar autoridade, atrair clientes e tirar a sua ideia do papel.",
     },
     {
       icon: <Bot className="w-6 h-6 text-white/90" />,
-      title: "Agente de IA",
+      title: "Agentes de IA sob medida",
       description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "Automatize processos, reduza custos e ofereça experiências personalizadas com soluções de inteligência artificial desenvolvidas para a sua empresa.",
     },
     {
       icon: <Smartphone className="w-6 h-6 text-white/90" />,
-      title: "Aplicativos",
+      title: "Aplicativos inteligentes",
       description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "Transformamos ideias em aplicativos móveis funcionais, intuitivos e que conectam sua marca diretamente ao cliente e colocamos a sua ideia em prática.",
     },
     {
       icon: <FileText className="w-6 h-6 text-white/90" />,
       title: "Landing pages",
       description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "Estruturadas para conversão, ideais para campanhas de marketing e geração de leads.",
+    },
+    // Novo serviço adicionado aqui
+    {
+      icon: <Users className="w-6 h-6 text-white/90" />,
+      title: "Gestão de Redes Sociais",
+      description:
+        "Criamos estratégias que aumentam sua presença digital, engajam seu público e transformam seguidores em clientes fiéis. Da produção de conteúdo ao tráfego orgânico e pago, gerenciamos tudo para você.",
     },
   ]
 
@@ -102,7 +110,12 @@ export default function ServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           {services.map((service, index) => (
-            <motion.div key={index} variants={itemVariants}>
+            // Lógica para expandir apenas o último card
+            <motion.div 
+              key={index} 
+              variants={itemVariants}
+              className={index === services.length - 1 ? "md:col-span-2" : ""}
+            >
               <Card
                 className="bg-white/1 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 hover:border-white/20 hover:scale-[1.02] shadow-white/20 shadow-[inset_0_0_8px_0_rgba(255,255,255,0.1)] lg:p-16 md:p-12 p-8 h-full"
               >
